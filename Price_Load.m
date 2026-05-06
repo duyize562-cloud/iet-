@@ -1,0 +1,109 @@
+clear all;clc
+%%
+t=[1:24];
+p_g_b=[0.17 0.17 0.17 0.17 0.17 0.17 0.17 0.49... 
+    0.49 0.49 0.83 0.83 0.83 0.83 0.83 0.49 0.49...
+    0.49 0.83 0.83 0.83 0.49 0.49 0.17]';                    %微网与电网购电电价
+p_g_s=[0.13 0.13 0.13 0.13 0.13 0.13 0.13 0.38... 
+    0.38 0.38 0.65 0.65 0.65 0.65 0.65 0.38 0.38...
+    0.38 0.65 0.65 0.65 0.38 0.38 0.13]';                    %微网与电网售电电价
+p_MG_bs=p_g_s;                                               %微网间购电、售电电价相同且等于微网与电网售电电价
+%%
+t1=[0:24];
+Le1s=[700 685 647 649 630 642 660 739 804 850 875 925 974 ... 
+    1000 885 841 852 864 900 874 880 870 852 780 700]./1.68;              %MG1夏季电负荷
+figure(1);plot(t1,Le1s,'k-*','MarkerSize',4.5,'LineWidth',0.75);
+set(gca,'xtick',[0:4:24]);xlim([0 24]);hold on 
+Lh1s=[300 280 250 200 150 200 295 350 365 347 250 247 245 ...
+    238 229 262 287 300 350 387 410 408 408 372 300]./4.98;               %MG1夏季热负荷
+plot(t1,Lh1s,'r--x','MarkerSize',4.5,'LineWidth',0.75);hold on
+Lc1s=[1100 950 870 820 840 880 1000 1200 1550 1450 1500 1800 1940 ...
+    1980 2000 1800 1750 1380 1350 1570 1450 1250 1150 1176 1100]./1.98;   %MG1夏季冷负荷
+plot(t1,Lc1s,'b-.^','MarkerSize',4.5,'LineWidth',0.75);
+legend('电负荷','热负荷','冷负荷', 'Location','NorthWest'); 
+xlabel(['\fontname{Times new roman}\itt/\rmh']);  
+ylabel(['\fontname{宋体}功率/\fontname{Times new roman}kW'])
+%%
+t1=[0:24];
+Le1inter=[700 680 650 625 608 628 660 720 770 785 821 850 ...
+    900 950 965 865 850 800 815 847 852 850 824 720 700]./1.68;    %MG1过渡季电负荷
+figure(2);plot(t1,Le1inter,'k-*','MarkerSize',4.5,'LineWidth',0.75);
+set(gca,'xtick',[0:4:24]);xlim([0 24]);hold on 
+Lh1inter=[267 262 259 247 240 248 259 267 272 262 252 249 250 ...
+    241 251 258 265 269 274 278 280 278 274 270 267]./1.68;        %MG1过渡季热负荷
+figure(2);plot(t1,Lh1inter,'r--x','MarkerSize',4.5,'LineWidth',0.75);hold on
+Lc1inter=[240 229 210 200 215 222 242 254 258 260 267 269 271 ...
+    274 277 270 265 252 241 244 250 242 238 228 240]./1.68;        %MG1过渡季冷负荷
+plot(t1,Lc1inter,'b-.^','MarkerSize',4.5,'LineWidth',0.75);
+legend('电负荷','热负荷','冷负荷', 'Location','NorthWest'); 
+xlabel(['\fontname{Times new roman}\itt/\rmh']);  
+ylabel(['\fontname{宋体}功率/\fontname{Times new roman}kW'])
+%%
+Le1w=[700 690 680 687 691 700 718 747 781 800 860 880 815 ...
+    809 800 811 828 911 1000 1011 999 980 970 900 700]./1.68;                %MG1冬季电负荷
+figure(3);plot(t1,Le1w,'k-*','MarkerSize',4.5,'LineWidth',0.75);
+set(gca,'xtick',[0:4:24]);xlim([0 24]);hold on 
+Lh1w=[1400 1550 1600 1634 1600 1589 1550 1400 1350 1250 1200 1056 998 ...
+    979 968 980 1050 1280 1377 1808 1988 1950 1923 1850 1400]./1.68;         %MG1冬季热负荷
+plot(t1,Lh1w,'r--x','MarkerSize',4.5,'LineWidth',0.75);hold on
+Lc1w=zeros(1,25);                                                            %MG1冬季冷负荷
+plot(t1,Lc1w,'b-.^','MarkerSize',4.5,'LineWidth',0.75);hold on
+legend('电负荷','热负荷','冷负荷', 'Location','NorthWest'); 
+xlabel(['\fontname{Times new roman}\itt/\rmh']);  
+ylabel(['\fontname{宋体}功率/\fontname{Times new roman}kW'])
+
+%%
+Le2s=[682 677 630 642 660 739 804 862 875 925 974 ... 
+    992 865 841 852 864 921 874 880 870 860 780 697 674 682]./2.016;       %MG2夏季电负荷
+figure(4);plot(t1,Le2s,'k-*','MarkerSize',4.5,'LineWidth',0.75);
+set(gca,'xtick',[0:4:24]);xlim([0 24]);hold on 
+Lh2s=[292 287 262 198 156 205 295 351 365 352 250 247 241 ...
+    238 229 254 298 308 500 387 420 408 411 382 292]./0.976;               %MG2夏季热负荷
+plot(t1,Lh2s,'r--x','MarkerSize',4.5,'LineWidth',0.75);hold on
+Lc2s=[1089 990 965 825 840 880 1000 1200 1550 1450 1511 1800 1900 ...
+    1940 1980 1782 1750 1442 1350 1450 1350 1250 1148 1162 1089]./2.376;   %MG2夏季冷负荷
+plot(t1,Lc2s,'b-.^','MarkerSize',4.5,'LineWidth',0.75);hold on
+legend('电负荷','热负荷','冷负荷', 'Location','NorthWest'); 
+xlabel(['\fontname{Times new roman}\itt/\rmh']);  
+ylabel(['\fontname{宋体}功率/\fontname{Times new roman}kW'])
+%%
+Le2inter=[650 634 608 628 660 720 770 785 821 850 ...
+    900 950 965 865 820 800 815 847 852 850 824 720 700 680 650]./1.7136;    %MG2过渡季电负荷
+figure(5);plot(t1,Le2inter,'k-*','MarkerSize',4.5,'LineWidth',0.75);
+set(gca,'xtick',[0:4:24]);xlim([0 24]);hold on 
+Lh2inter=[267 262 259 247 240 248 259 267 290 262 252 249 250 ...
+    232 251 258 260 269 274 274 276 278 274 270 267]./1.7136;                %MG2过渡季热负荷
+plot(t1,Lh2inter,'r--x','MarkerSize',4.5,'LineWidth',0.75);hold on
+Lc2inter=[240 229 210 192 215 222 242 254 258 260 267 269 271 ...
+    274 287 270 265 252 241 244 258 242 238 228 240]./1.7136;                %MG2过渡季冷负荷
+plot(t1,Lc2inter,'b-.^','MarkerSize',4.5,'LineWidth',0.75);
+legend('电负荷','热负荷','冷负荷', 'Location','NorthWest'); 
+xlabel(['\fontname{Times new roman}\itt/\rmh']);  
+ylabel(['\fontname{宋体}功率/\fontname{Times new roman}kW'])
+%%
+Le3w=[680 687 691 700 718 747 781 800 860 880 815 ...
+    809 800 811 828 911 1000 1011 999 980 970 900 700 691 680]./1.9136;         %MG2冬季电负荷
+figure(6);plot(t1,Le3w,'k-*','MarkerSize',4.5,'LineWidth',0.75);
+set(gca,'xtick',[0:4:24]);xlim([0 24]);hold on 
+Lh2w=[1400 1650 1600 1634 1600 1589 1550 1400 1350 1250 1200 1056 998 ...
+    979 968 1000 1050 1280 1497 1808 1988 1970 1923 1850 1400]./1.9136;         %MG2冬季热负荷
+plot(t1,Lh2w,'r--x','MarkerSize',4.5,'LineWidth',0.75);hold on
+Lc2w=zeros(1,25);                                                               %MG2冬季冷负荷
+plot(t1,Lc2w,'b-.^','MarkerSize',4.5,'LineWidth',0.75);hold on
+legend('电负荷','热负荷','冷负荷', 'Location','NorthWest'); 
+xlabel(['\fontname{Times new roman}\itt/\rmh']);  
+ylabel(['\fontname{宋体}功率/\fontname{Times new roman}kW'])
+%%
+Le2s=[780 685 647 649 630 642 660 739 804 850 875 925 974 ... 
+    1000 885 841 852 864 900 874 880 870 852 780 780]./8.66;       %MG3夏季电负荷
+figure(7);plot(t1,Le2s,'k-*','MarkerSize',4.5,'LineWidth',0.75);
+set(gca,'xtick',[0:4:24]);xlim([0 24]);hold on 
+Le3inter=[750 680 650 625 608 628 660 720 770 785 821 850 ...
+    900 950 965 865 850 800 815 847 852 850 824 720 750]./8.66;    %MG3过渡季电负荷
+plot(t1,Le3inter,'r--x','MarkerSize',4.5,'LineWidth',0.75);hold on
+Le3w=[740 690 680 687 691 700 718 747 781 800 860 880 815 ...
+    809 800 811 828 911 1000 1011 999 980 970 900 740]./8.66;      %MG3冬季电负荷
+plot(t1,Le3w,'b-.^','MarkerSize',4.5,'LineWidth',0.75);
+legend('夏季电负荷','过渡季电负荷','冬季电负荷', 'Location','NorthWest'); 
+xlabel(['\fontname{Times new roman}\itt/\rmh']);  
+ylabel(['\fontname{宋体}功率/\fontname{Times new roman}kW'])
