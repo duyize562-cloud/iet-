@@ -1,0 +1,16 @@
+     forall(i in S)
+       forall(j in 1..time-1)//蓄电池容量大小约束
+          {
+              E[i][j]>=Emin*(1-On[i][j+1])+beta*Emax*On[i][j+1];
+              E[i][j]<=Emax*(1-Off[i][j+1])+alfa*Emax*Off[i][j+1];
+//                E[i][j]>=Emin;
+//                E[i][j]<=Emax;
+           }; 
+ 
+     forall(i in S)
+          {
+              Eini>=Emin*(1-On[i][1])+beta*Emax*On[i][1];
+              Eini<=Emax*(1-Off[i][1])+alfa*Emax*Off[i][1];
+//                E[i][j]>=Emin;
+//                E[i][j]<=Emax;
+           }; 
